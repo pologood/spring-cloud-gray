@@ -81,13 +81,8 @@ public class GrayServerApplication {
                 <artifactId>spring-cloud-starter-zookeeper-discovery</artifactId>
             </dependency>
             <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-starter-feign</artifactId>
-            </dependency>
-            <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
-                <version>3.5</version>
             </dependency>
     
     
@@ -110,7 +105,7 @@ spring:
         register: true
         root: dev
         metadata:
-          # 因zookeeper作为注册中心生成的instanceId不规则且不易获取，所以必须配置instanceId，取值值只要能区分不同的实例即可
+          # 可以像eureka一样自定义instanceId，取值值只要能区分不同的实例即可
           instanceId: ${spring.application.name}:${java.rmi.server.hostname}:${server.port} 
           
 server:

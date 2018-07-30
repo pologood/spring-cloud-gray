@@ -9,7 +9,7 @@ import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.shared.Application;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,19 +19,17 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
-@ConditionalOnBean(EurekaClient.class)
+@ConditionalOnClass(name = "org.springframework.cloud.netflix.eureka.serviceregistry.EurekaRegistration")
 public class EurekaGrayService extends AbstractGrayService {
 
     private final EurekaClient eurekaClient;
-    private final DiscoveryClient discoveryClient;
     private final GrayServiceManager grayServiceManager;
 
     @Autowired
-    public EurekaGrayService(EurekaClient eurekaClient, DiscoveryClient discoveryClient, GrayServiceManager
-            grayServiceManager) {
+    public EurekaGrayService(EurekaClient eurekaClient, DiscoveryClient discoveryClient,
+                             GrayServiceManager grayServiceManager) {
         super(grayServiceManager, discoveryClient);
         this.eurekaClient = eurekaClient;
-        this.discoveryClient = discoveryClient;
         this.grayServiceManager = grayServiceManager;
     }
 
