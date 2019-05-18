@@ -1,18 +1,19 @@
 package cn.springcloud.gray.client.config.properties;
 
-import cn.springcloud.gray.RetryableInformationClient;
-import cn.springcloud.gray.client.GrayClientConfig;
+import cn.springcloud.gray.GrayClientConfig;
+import cn.springcloud.gray.communication.RetryableInformationClient;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties("gray.client")
 public class GrayClientProperties implements GrayClientConfig {
 
+    private String runenv = "web";
 
     private int serviceUpdateIntervalTimerInMs = 60000;
 
     private String informationClient = "http";
 
-    private String serverUrl = "http://localhost:10202";
+    private String serverUrl = "";
 
     private boolean retryable = true;
     private int retryNumberOfRetries = RetryableInformationClient.DEFAULT_NUMBER_OF_RETRIES;
@@ -26,6 +27,11 @@ public class GrayClientProperties implements GrayClientConfig {
 
     public void setInformationClient(String informationClient) {
         this.informationClient = informationClient;
+    }
+
+    @Override
+    public String runenv() {
+        return runenv;
     }
 
     @Override
@@ -110,7 +116,7 @@ public class GrayClientProperties implements GrayClientConfig {
         /**
          * 是否使用多版本,默认不使用
          *
-         * @return
+         * @return ture to use service multi version control
          */
         public boolean isUseMultiVersion() {
             return useMultiVersion;
